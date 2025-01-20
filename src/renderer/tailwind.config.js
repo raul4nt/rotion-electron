@@ -1,3 +1,5 @@
+import plugin from 'tailwindcss/plugin'
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -25,5 +27,17 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(({ addUtilities }) => {
+      addUtilities({
+        '.regin-drag': {
+          '-webkit-app-region': 'drag',
+        },
+
+        '.region-no-drag': {
+          '-webkit-app-region': 'no-drag',
+        },
+      })
+    }),
+  ],
 }

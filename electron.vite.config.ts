@@ -1,4 +1,4 @@
-import path from 'node:path'
+import path from 'path'
 import { defineConfig, externalizeDepsPlugin } from 'electron-vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from 'tailwindcss'
@@ -6,14 +6,15 @@ import tailwindcss from 'tailwindcss'
 export default defineConfig({
   main: {
     plugins: [externalizeDepsPlugin()],
-
     publicDir: path.resolve('resources'),
-    // mostrando pro main a pasta resources(que tem os icones/imagens do app)
   },
   preload: {
     plugins: [externalizeDepsPlugin()],
   },
   renderer: {
+    define: {
+      'process.platform': JSON.stringify(process.platform),
+    },
     css: {
       postcss: {
         plugins: [
@@ -24,10 +25,10 @@ export default defineConfig({
       },
     },
     plugins: [react()],
-  },
-  resolve: {
-    alias: {
-      '@renderer': path.resolve('src/renderer/src'),
+    resolve: {
+      alias: {
+        '@renderer': path.resolve('src/renderer/src'),
+      },
     },
   },
 })
